@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Christmas Tree</title>
+        <style>
+            html, body {
+                width:  100%;
+                height: 100%;
+                margin: 0;
+                border: 0;
+            }
+        </style>
+    </head>
+    <body onresize="resize_canvas()">
+        <canvas id="treeCanvas" width="640" height="480"></canvas>
+        <script src="christmas_tree.js"></script>
+        <script>
+            function resize_canvas() {
+                var canvas = document.getElementById("treeCanvas");
+                var context = canvas.getContext('2d');
+                var redraw = false;
+
+                if (context.canvas.width != window.innerWidth) {
+                    context.canvas.width = window.innerWidth;
+                    redraw = true;
+                }
+
+                if (context.canvas.height != window.innerHeight) {
+                    context.canvas.height = window.innerHeight;
+                    redraw = true;
+                }
+
+                if (redraw === true) {
+                    drawTree(context);
+                }
+            }
+
+            resize_canvas();
+        </script>
+    </body>
+</html>
