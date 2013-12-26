@@ -1,18 +1,15 @@
 /*
-        #
+        +
         *
        ***
       *****
      *******
     *********
-        *
-
-    good ratio: width: 505, height: 449
-
+       | |
 */
 
 function drawTree(context) {
-    var numberOfBranches = 7;
+    var numberOfBranches = 5;
     var topMarginInBranches = 1;
     var bottomMarginInBranches = 1;
     var starHeightInBranches = 1.5;
@@ -25,11 +22,11 @@ function drawTree(context) {
                            trunkHeightInBranches +
                            bottomMarginInBranches;
 
-    var branchThickness = context.canvas.height / heightInBranches; //(numberOfBranches * 2.5);
+    var branchThickness = context.canvas.height / heightInBranches;
     var maxRatio = 1;
-    var maxBranchWidth = context.canvas.width; // / 1.5;
+    var maxBranchWidth = context.canvas.width;
     if (maxBranchWidth/context.canvas.height > maxRatio) {
-        maxBranchWidth = context.canvas.height;
+        maxBranchWidth = context.canvas.height * maxRatio;
     }
 
     var xCentre = context.canvas.width / 2;
@@ -52,10 +49,45 @@ function drawTree(context) {
 }
 
 function drawStar(context, x, y, radius) {
+    var points = 5;
+    var angleStep = 2 * Math.PI / (points*2); // double the points as includes inner points
+
+    var angle;
+    var xCircle;
+    var yCircle;
+    var pointRadius;
+    var innerRadius = radius / 2;
+    var innerPoint = false;
+
     context.beginPath();
-    context.arc(x, y, radius, 0, 2 * Math.PI, false);
     context.fillStyle = 'yellow';
+    for (angle = 0; angle <= 2*Math.PI ; angle += angleStep) {
+        if (innerPoint) {
+            pointRadius = innerRadius;
+        } else {
+            pointRadius = radius;
+        }
+        xCircle = x + (pointRadius * Math.sin(angle));
+        yCircle = y - (pointRadius * Math.cos(angle));
+
+        if (angle === 0) { // first point
+            context.moveTo(xCircle, yCircle);
+        } else {
+            context.lineTo(xCircle, yCircle);
+        }
+
+        innerPoint = !innerPoint;
+    }
     context.fill();
+
+    // the sparkle
+    context.beginPath();
+    context.arc(x+(radius/4), y-(radius/4), 2, 0, 2 * Math.PI, false);
+    context.fillStyle = 'rgba(255,255,255,1)';     // solid
+    context.strokeStyle = 'rgba(255,255,255,0.5)'; // 50% transparent
+    context.lineWidth = 2;
+    context.fill();
+    context.stroke();
 }
 
 function drawBranch(context,
