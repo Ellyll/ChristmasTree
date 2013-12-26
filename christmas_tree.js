@@ -148,7 +148,10 @@ function drawBauble(context, x, y, radius, colour) {
     context.beginPath();
     context.arc(x+(radius/2), y-(radius/2), 1, 0, 2 * Math.PI, false);
     context.fillStyle = 'white';
+    context.strokeStyle = 'rgba(255,255,255,0.5)'; // 50% transparent
+    context.lineWidth = 1;
     context.fill();
+    context.stroke();
 }
 
 function ColourGenerator() {
