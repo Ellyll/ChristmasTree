@@ -13,12 +13,16 @@ function drawTree(context) {
     var topMarginInBranches = 1;
     var bottomMarginInBranches = 1;
     var starHeightInBranches = 1.5;
+    var starSpacing = 1;
+    var trunkSpacing = 0.5;
     var trunkHeightInBranches = 2;
     var spacingHeightInBranches = 1;
     var heightInBranches = topMarginInBranches +
                            starHeightInBranches +
+                           starSpacing +
                            numberOfBranches +
-                           (spacingHeightInBranches*(numberOfBranches+1)) +
+                           (spacingHeightInBranches*(numberOfBranches-1)) +
+                           trunkSpacing +
                            trunkHeightInBranches +
                            bottomMarginInBranches;
 
@@ -31,21 +35,31 @@ function drawTree(context) {
 
     var xCentre = context.canvas.width / 2;
     var colorGenerator = new ColourGenerator();
-    var starY = branchThickness * (topMarginInBranches + (starHeightInBranches/2));
-    var starRadius = branchThickness * (starHeightInBranches/2);
 
-    drawStar(context, xCentre, starY, starRadius);
+    // Trunk
+    var trunkCentreY = branchThickness * (topMarginInBranches +
+        starHeightInBranches +
+        starSpacing +
+        numberOfBranches +
+        (spacingHeightInBranches*(numberOfBranches-1)) +
+        trunkSpacing +
+        (trunkHeightInBranches/2));
+    drawTrunk(context, xCentre, trunkCentreY, maxBranchWidth * 0.15, trunkHeightInBranches*branchThickness);
 
-    // Draw branches and baubles
+    // Branches and baubles
     var i;
-    var branchY = branchThickness * (topMarginInBranches + starHeightInBranches + spacingHeightInBranches + 0.5);
+    var branchY = branchThickness * (topMarginInBranches + starHeightInBranches + starSpacing + 0.5);
     for (i = 1; i <= numberOfBranches; i++) {
         drawBranch(context, i, numberOfBranches, branchThickness, maxBranchWidth,xCentre, branchY, colorGenerator);
         branchY += branchThickness + (branchThickness*spacingHeightInBranches);
     }
 
-    var trunkY = branchY - (branchThickness + (branchThickness*spacingHeightInBranches)) + (trunkHeightInBranches*branchThickness);
-    drawTrunk(context, xCentre, trunkY, maxBranchWidth / 30, trunkHeightInBranches*branchThickness);
+    // Star
+    var starY = branchThickness * (topMarginInBranches + (starHeightInBranches/2));
+    var starRadius = branchThickness * (starHeightInBranches/2);
+
+    drawStar(context, xCentre, starY, starRadius);
+
 }
 
 function drawStar(context, x, y, radius) {
@@ -125,17 +139,12 @@ function drawBranch(context,
     }
 }
 
-function drawTrunk(context, xCentre, y, width, thickness) {
+function drawTrunk(context, xCentre, yCentre, width, height) {
     var xStart = xCentre - (width/2);
-    var xEnd = xCentre + (width/2);
+    var yStart = yCentre - (height/2);
 
-    context.beginPath();
-    context.moveTo(xStart, y);
-    context.lineTo(xEnd, y);
-    context.lineWidth = thickness;
-    context.strokeStyle = 'brown';
-    context.lineCap = 'square';
-    context.stroke();
+    context.fillStyle = '#8B4513';
+    context.fillRect(xStart, yStart, width, height);
 }
 
 function drawBauble(context, x, y, radius, colour) {
