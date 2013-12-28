@@ -94,7 +94,7 @@ function drawStar(context, x, y, radius) {
     }
     context.fill();
 
-    // the sparkle
+    // the highlight
     context.beginPath();
     context.arc(x+(radius/4), y-(radius/4), 2, 0, 2 * Math.PI, false);
     context.fillStyle = 'rgba(255,255,255,1)';     // solid
@@ -156,14 +156,17 @@ function drawBauble(context, x, y, radius, colour) {
     context.fillStyle = colour;
     context.fill();
 
-    // the sparkle
+    // the highlight
+    var hX = x + (radius/2);
+    var hY = y - (radius/2);
+    var hR = radius/7;
+    var gradient = context.createRadialGradient(hX, hY, 0, hX, hY, hR);
+    gradient.addColorStop(0, '#FFFFFF');
+    gradient.addColorStop(1, colour);
     context.beginPath();
-    context.arc(x+(radius/2), y-(radius/2), 1, 0, 2 * Math.PI, false);
-    context.fillStyle = 'white';
-    context.strokeStyle = 'rgba(255,255,255,0.5)'; // 50% transparent
-    context.lineWidth = 1;
+    context.fillStyle = gradient;
+    context.arc(hX, hY, hR, 0, 2*Math.PI, false);
     context.fill();
-    context.stroke();
 }
 
 function ColourGenerator() {
