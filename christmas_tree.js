@@ -10,23 +10,23 @@
 
 function drawTree(context) {
     var numberOfBranches = 5;
-    var topMarginInBranches = 1;
-    var bottomMarginInBranches = 1;
-    var starHeightInBranches = 1.5;
-    var starSpacing = 1;
-    var trunkSpacing = 0.5;
-    var trunkHeightInBranches = 2;
-    var spacingHeightInBranches = 1;
-    var heightInBranches = topMarginInBranches +
-                           starHeightInBranches +
-                           starSpacing +
-                           numberOfBranches +
-                           (spacingHeightInBranches*(numberOfBranches-1)) +
-                           trunkSpacing +
-                           trunkHeightInBranches +
-                           bottomMarginInBranches;
+    var topMarginRelative = 1;
+    var bottomMarginRelative = 1;
+    var starHeightRelative = 1.5;
+    var starSpacingRelative = 1;
+    var trunkSpacingRelative = 0.5;
+    var trunkHeightRelative = 2;
+    var spacingHeightRelative = 1;
+    var heightRelative = topMarginRelative +
+                         starHeightRelative +
+                         starSpacingRelative +
+                         numberOfBranches +
+                         (spacingHeightRelative*(numberOfBranches-1)) +
+                         trunkSpacingRelative +
+                         trunkHeightRelative +
+                         bottomMarginRelative;
 
-    var branchThickness = context.canvas.height / heightInBranches;
+    var branchThickness = context.canvas.height / heightRelative;
     var maxRatio = 1;
     var maxBranchWidth = context.canvas.width;
     if (maxBranchWidth/context.canvas.height > maxRatio) {
@@ -37,26 +37,26 @@ function drawTree(context) {
     var colorGenerator = new ColourGenerator();
 
     // Trunk
-    var trunkCentreY = branchThickness * (topMarginInBranches +
-        starHeightInBranches +
-        starSpacing +
+    var trunkCentreY = branchThickness * (topMarginRelative +
+        starHeightRelative +
+        starSpacingRelative +
         numberOfBranches +
-        (spacingHeightInBranches*(numberOfBranches-1)) +
-        trunkSpacing +
-        (trunkHeightInBranches/2));
-    drawTrunk(context, xCentre, trunkCentreY, maxBranchWidth * 0.15, trunkHeightInBranches*branchThickness);
+        (spacingHeightRelative*(numberOfBranches-1)) +
+        trunkSpacingRelative +
+        (trunkHeightRelative/2));
+    drawTrunk(context, xCentre, trunkCentreY, maxBranchWidth * 0.15, trunkHeightRelative*branchThickness);
 
     // Branches and baubles
     var i;
-    var branchY = branchThickness * (topMarginInBranches + starHeightInBranches + starSpacing + 0.5);
+    var branchY = branchThickness * (topMarginRelative + starHeightRelative + starSpacingRelative + 0.5);
     for (i = 1; i <= numberOfBranches; i++) {
         drawBranch(context, i, numberOfBranches, branchThickness, maxBranchWidth,xCentre, branchY, colorGenerator);
-        branchY += branchThickness + (branchThickness*spacingHeightInBranches);
+        branchY += branchThickness + (branchThickness*spacingHeightRelative);
     }
 
     // Star
-    var starY = branchThickness * (topMarginInBranches + (starHeightInBranches/2));
-    var starRadius = branchThickness * (starHeightInBranches/2);
+    var starY = branchThickness * (topMarginRelative + (starHeightRelative/2));
+    var starRadius = branchThickness * (starHeightRelative/2);
 
     drawStar(context, xCentre, starY, starRadius);
 
