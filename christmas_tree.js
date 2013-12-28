@@ -167,7 +167,7 @@ function drawBauble(context, x, y, radius, colour) {
 }
 
 function ColourGenerator() {
-    this.colours = ['red', 'green', 'yellow', 'magenta', 'blue', 'silver', 'gold', 'purple'];
+    this.colours = ['Red', 'DarkGreen', 'Yellow', 'Magenta', 'Blue', 'Silver', 'Gold', 'Purple'];
     this.colourIndex = 0;
 }
 ColourGenerator.prototype.getColour = function() {
