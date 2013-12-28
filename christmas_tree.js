@@ -143,7 +143,10 @@ function drawTrunk(context, xCentre, yCentre, width, height) {
     var xStart = xCentre - (width/2);
     var yStart = yCentre - (height/2);
 
-    context.fillStyle = '#8B4513';
+    var gradient = context.createLinearGradient(xStart, yStart, xStart+width, yStart);
+    gradient.addColorStop(0, '#64320E');
+    gradient.addColorStop(1, '#8B4513');
+    context.fillStyle = gradient;
     context.fillRect(xStart, yStart, width, height);
 }
 
