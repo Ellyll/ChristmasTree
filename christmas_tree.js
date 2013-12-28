@@ -110,18 +110,18 @@ function drawBranch(context,
                     branchThickness,
                     maxBranchWidth,
                     xCentre,
-                    y,
+                    yCentre,
                     colourGenerator) {
     var xStart = xCentre - ((branchNumber/numberOfBranches)*maxBranchWidth)/2;
     var xEnd   = xCentre + ((branchNumber/numberOfBranches)*maxBranchWidth)/2;
+    var yStart = yCentre - (branchThickness/2);
+    var yEnd = yCentre + (branchThickness/2);
 
-    context.beginPath();
-    context.moveTo(xStart, y);
-    context.lineTo(xEnd, y);
-    context.lineWidth = branchThickness;
-    context.strokeStyle = '#00AA00';
-    context.lineCap = 'square';
-    context.stroke();
+    var gradient = context.createLinearGradient(xStart, yStart, xEnd, yEnd);
+    gradient.addColorStop(0, '#005500');
+    gradient.addColorStop(1, '#00AA00');
+    context.fillStyle = gradient;
+    context.fillRect(xStart, yStart, xEnd-xStart, yEnd-yStart);
 
     var baubleDiameter = branchThickness * 0.8;
     var maxBaubles = Math.floor((xEnd - xStart ) / baubleDiameter);
@@ -132,7 +132,7 @@ function drawBranch(context,
         var percent = Math.floor(Math.random()*101);
         if (percent < 40) {
             var xBauble = xStart + (i*baubleDiameter) + (baubleDiameter/2);
-            var yBauble = y + Math.floor(Math.random()*((branchThickness+baubleDiameter)/2));
+            var yBauble = yCentre + Math.floor(Math.random()*((branchThickness+baubleDiameter)/2));
             colour = colourGenerator.getColour();
             drawBauble(context, xBauble, yBauble, baubleDiameter/2, colour);
         }
