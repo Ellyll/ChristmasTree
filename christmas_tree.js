@@ -44,7 +44,7 @@ function drawTree(context) {
         (spacingHeightRelative*(numberOfBranches-1)) +
         trunkSpacingRelative +
         (trunkHeightRelative/2));
-    drawTrunk(context, xCentre, trunkCentreY, maxBranchWidth * 0.15, trunkHeightRelative*branchThickness);
+    drawTrunk(context, xCentre, trunkCentreY, maxBranchWidth * 0.10, trunkHeightRelative*branchThickness);
 
     // Branches and baubles
     var i;
